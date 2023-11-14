@@ -32,29 +32,23 @@ const Home = () => {
   let data = "";
   useEffect(() => {
     async function acquire() {
-      let x =1
-      let y =1
-      let z=0
-      let op ="TA2"
       try {
         // setIsLoading(true);
         const response = await fetch(
           // `http://api.openweathermap.org/geo/1.0/direct?q=${stateName}&limit=&appid=${APIkey}`
-          // `https://api.openweathermap.org/geo/1.0/direct?q=${searchTerm}&appid=${APIkey}`
+          `https://api.openweathermap.org/geo/1.0/direct?q=${searchTerm}&appid=${APIkey}`
           // `http://api.openweathermap.org/geo/1.0/direct?q=London&limit=5&appid=${APIkey}`
-          `http://maps.openweathermap.org/maps/2.0/weather/${op}/${z}/${x}/${y}?appid=${APIkey}`
         );
-
         if (response.ok) {
-          // await console.log(response.json());
+          // await // console.log(response.json());
           data = await response.json();
-          console.log(data)
           await setRespond(true);
           setGeo(data[0]);
         }
       } catch (error) {
         console.log(error);
         setIsLoading(false);
+        setLoading(false)
       }
 
       // const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=${part}&appid=${APIkey}`
@@ -70,7 +64,7 @@ const Home = () => {
         );
         if (weatherResponder.ok) {
           data = await weatherResponder.json();
-          console.log(data);
+          // console.log(data);
           setWeatherResults(data.daily);
           setStateName(data.timezone);
           setLoading(false);
@@ -78,10 +72,11 @@ const Home = () => {
           setWeatherReponse(true);
         }
       } else {
-        console.log("no lat and long");
+        // console.log("no lat and long");
       }
     } catch (error) {
-      console.log(error);
+      // setLoading(false)
+      // console.log(error);
     }
   }
   useEffect(() => {
@@ -118,26 +113,28 @@ const Home = () => {
     const formattedDate = `${year}-${month}-${day}`;
     const formattedTime = `${hours}:${minutes}:${seconds}`;
 
-    // console.log("Date: ", formattedDate);
-    // console.log("Time: ", formattedTime);
-    // console.log(dayOfWeek);
+    // // console.log("Date: ", formattedDate);
+    // // console.log("Time: ", formattedTime);
+    // // console.log(dayOfWeek);
   });
   useEffect(() => {
     if (respond === true) {
       try {
         setLong(geo.lon);
         setLat(geo.lat);
+        setIsLoaded(true);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     } else {
     }
   });
   useEffect(() => {
     if ((long !== 0, lat !== 0)) {
-      console.log(long);
-      console.log(lat);
-      setIsLoaded(true);
+      // console.log(long);
+      // console.log(lat);
+    } else {
+      // setIsLoaded(false)
     }
   });
   // let weatherData = "";
@@ -150,10 +147,10 @@ const Home = () => {
   //       if (weatherRespond.ok) {
   //         weatherData = await weatherRespond.json();
   //         setWeatherRead(weatherData);
-  //         console.log(weatherRead);
+  //         // console.log(weatherRead);
   //       }
   //     } catch (error) {
-  //       console.log(error);
+  //       // console.log(error);
   //     }
   //   }
   //   weather();
@@ -187,7 +184,7 @@ const Home = () => {
     }
 
     setDays(daysArray);
-    console.log(days);
+    // console.log(days);
   }, []);
 
   const handleSearch = (e) => {
@@ -215,7 +212,6 @@ const Home = () => {
       <div className="homeSection">
         <div className="middleway">
           <div className="galaxyTab">
-            
             <div className="galaxybox">
               <div className="galaxy">
                 <span>GALAXY</span>
@@ -279,7 +275,9 @@ const Home = () => {
                   <div className="imagedisplay">
                     {weatherResponse === false ? (
                       <>
-                        <span className="big">Tailor-made Forecasts for Your Location</span>
+                        <span className="big">
+                          Tailor-made Forecasts for Your Location
+                        </span>
                         <p style={{ fontSize: "20px" }}>
                           Get personalized weather reports and forecasts based
                           on your specific location. Stay safe and prepared for
@@ -587,26 +585,18 @@ const Home = () => {
                           alignItems: "center",
                           justifyContent: "center",
                         }}
+                        disabled={!searchTerm}
                         onClick={() => {
                           setSubmitted(true);
                           weatherRespond();
                         }}
                       >
                         {submited === false ? (
-                          <div>Submit</div>
+                          <div style={{fontSize:"16px", fontWeight:"bold"}}>Submit</div>
                         ) : (
                           <>
                             {loading && <Loader />}
-                            {/* {showSuccess && (
-                                                <div className="success-popup">
-                                                  <p>Form submitted!</p>
-                                                </div>
-                                              )}
-                                              {showFailure && (
-                                                <div className="success-popup">
-                                                  <p>Error</p>
-                                                </div>
-                                              )} */}
+                         
                           </>
                         )}
                       </button>

@@ -14,15 +14,7 @@ const Navbar = () => {
               <span>Weather Galore</span>
 
           <div className="displayed">
-              {openMenu === false ? (
-                <span>
-                  <AiOutlineMenuFold onClick={() => setOpenMenu(!openMenu)} />
-                </span>
-              ) : (
-                <span>
-                  <AiOutlineMenuUnfold onClick={() => setOpenMenu(!openMenu)} />
-                </span>
-              )}
+             
 
           </div>
             </div>
@@ -53,7 +45,7 @@ const Navbar = () => {
             </div>
           )}
           <div className="second-box">
-              <ul className="nav-ul">
+              {/* <ul className="nav-ul">
                 <div className="li-b">
                   <li>
                     <div className="li-box">
@@ -73,7 +65,7 @@ const Navbar = () => {
                     </div>
                   </li>
                 </div>
-              </ul>
+              </ul> */}
             </div>
         </div>
       </div>
