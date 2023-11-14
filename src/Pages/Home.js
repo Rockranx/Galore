@@ -15,9 +15,6 @@ const Home = () => {
   const [long, setLong] = useState(0);
   const [lat, setLat] = useState(0);
   const [geo, setGeo] = useState([]);
-  const [weatherRead, setWeatherRead] = useState([]);
-  const [completedCycles, setCompletedCycles] = useState(0);
-  const [seconds, setSeconds] = useState(2);
   const [respond, setRespond] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -27,7 +24,7 @@ const Home = () => {
   const [days, setDays] = useState([]);
   const [loading, setLoading] = useState(false);
   const [submited, setSubmitted] = useState(false);
-  const APIkey = "2d4332e4c6e1898278a626f256c64140";
+  const APIkey = process.env.REACT_APP_NOT_OPENWEATHER_API;
 
   let data = "";
   useEffect(() => {
@@ -48,10 +45,8 @@ const Home = () => {
       } catch (error) {
         console.log(error);
         setIsLoading(false);
-        setLoading(false)
+        setLoading(false);
       }
-
-      // const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=${part}&appid=${APIkey}`
     }
     acquire();
   }, [searchTerm]);
@@ -64,7 +59,7 @@ const Home = () => {
         );
         if (weatherResponder.ok) {
           data = await weatherResponder.json();
-          // console.log(data);
+
           setWeatherResults(data.daily);
           setStateName(data.timezone);
           setLoading(false);
@@ -72,10 +67,8 @@ const Home = () => {
           setWeatherReponse(true);
         }
       } else {
-        // console.log("no lat and long");
       }
     } catch (error) {
-      // setLoading(false)
       // console.log(error);
     }
   }
@@ -113,9 +106,9 @@ const Home = () => {
     const formattedDate = `${year}-${month}-${day}`;
     const formattedTime = `${hours}:${minutes}:${seconds}`;
 
-    // // console.log("Date: ", formattedDate);
-    // // console.log("Time: ", formattedTime);
-    // // console.log(dayOfWeek);
+    //  console.log("Date: ", formattedDate);
+    //  console.log("Time: ", formattedTime);
+    //  console.log(dayOfWeek);
   });
   useEffect(() => {
     if (respond === true) {
@@ -129,70 +122,11 @@ const Home = () => {
     } else {
     }
   });
-  useEffect(() => {
-    if ((long !== 0, lat !== 0)) {
-      // console.log(long);
-      // console.log(lat);
-    } else {
-      // setIsLoaded(false)
-    }
-  });
-  // let weatherData = "";
-  // useEffect(() => {
-  //   async function weather() {
-  //     try {
-  //       const weatherRespond = await fetch(
-  //         // `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${long}&exclude={part}&appid=${APIkey}`
-  //       );
-  //       if (weatherRespond.ok) {
-  //         weatherData = await weatherRespond.json();
-  //         setWeatherRead(weatherData);
-  //         // console.log(weatherRead);
-  //       }
-  //     } catch (error) {
-  //       // console.log(error);
-  //     }
-  //   }
-  //   weather();
-  // }, [long, lat]);
-  useEffect(() => {
-    const today = new Date();
-    const dayOfWeek = today.getDay(); // 0 (Sunday) to 6 (Saturday)
-
-    // Define the names of days.
-    const daysOfWeek = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
-
-    // Create an array to store the days of the week.
-    const daysArray = [];
-
-    for (let i = 0; i < 8; i++) {
-      const date = new Date(today);
-      date.setDate(today.getDate() + i);
-
-      const dayName = daysOfWeek[(dayOfWeek + i) % 7];
-      const dateString = date.toLocaleDateString(); // Change the format as needed.
-
-      daysArray.push({ day: dayName, date: dateString });
-    }
-
-    setDays(daysArray);
-    // console.log(days);
-  }, []);
 
   const handleSearch = (e) => {
-    // const query = ;
     setSearchTerm(e.target.value);
 
     if (searchTerm.length > 4) {
-      // Simulate a search (you can replace this with an API call)
     } else {
       setSearchResults([]);
     }
@@ -201,7 +135,6 @@ const Home = () => {
     dots: true,
     infinite: false,
     speed: 500,
-    // dots:true,
     slidesToShow: 3,
     slidesToScroll: 1,
     swipeToSlide: true,
@@ -232,29 +165,18 @@ const Home = () => {
                         again!
                       </span>
                     </div>
-                    {/* <div className="lowerdiv"></div> */}
                   </div>
                 </div>
               </div>
               <div className="divider2">
                 <div className="block2">
-                  <div className="innerblock2">
-                    {/* <img
-                      src="https://framerusercontent.com/images/H1LvUeKXnFvpqC54JFMgnLlDQqE.jpg?scale-down-to=512"
-                      alt=""
-                    /> */}
-                  </div>
+                  <div className="innerblock2"></div>
                 </div>
               </div>
             </div>
             <div className="imagesBlock2">
               <div className="divider22">
-                <div className="block5">
-                  {/* <img
-                    src="https://framerusercontent.com/images/4VaR0D9UXY7Tu2bYjueIn32Lka4.jpg?scale-down-to=512"
-                    alt=""
-                  /> */}
-                </div>
+                <div className="block5"></div>
               </div>
               <div className="divider11">
                 <div className="block4">
@@ -559,9 +481,7 @@ const Home = () => {
                       </Slider>
                     </div>
                   </div>
-                  {/* <img src={sun} alt="Sunny" srcset="" className="sunImage"/> */}
                 </div>
-                {/* <div className="weatherDays"></div> */}
               </div>
             </div>
             <div className="displayInput">
@@ -576,8 +496,6 @@ const Home = () => {
                         onChange={handleSearch}
                         className="input"
                       />
-                      {/* <input type="text" placeholder="Enter State Code" />
-                <input type="text" placeholder="Enter City" /> */}
                       <button
                         className="button"
                         style={{
@@ -592,12 +510,11 @@ const Home = () => {
                         }}
                       >
                         {submited === false ? (
-                          <div style={{fontSize:"16px", fontWeight:"bold"}}>Submit</div>
+                          <div style={{ fontSize: "16px", fontWeight: "bold" }}>
+                            Submit
+                          </div>
                         ) : (
-                          <>
-                            {loading && <Loader />}
-                         
-                          </>
+                          <>{loading && <Loader />}</>
                         )}
                       </button>
                     </div>
@@ -606,10 +523,7 @@ const Home = () => {
               ) : (
                 <>
                   {isLoaded === true ? (
-                    <div>
-                      {long}
-                      {lat}
-                    </div>
+                    <div></div>
                   ) : (
                     <div className="loader">
                       <span />
@@ -621,10 +535,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      {/* <button onClick={() => weatherResponder()}>acquire</button> */}
-
       <Footer />
-      {/* <div className="imagedisplay"></div> */}
     </>
   );
 };
